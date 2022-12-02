@@ -1,3 +1,4 @@
+# pre_process dataset label.png 
 import os
 import random
 import cv2

@@ -89,7 +89,7 @@ if __name__ == "__main__":
 
 
     # 导入onnx
-    onnx_path = os.path.join(root_path, '2000.onnx')
+    onnx_path = os.path.join(root_path, '10000.onnx')
     onnx_session = ort.InferenceSession(onnx_path)
     
 
