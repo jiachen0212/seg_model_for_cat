@@ -1,3 +1,5 @@
 https://www.robots.ox.ac.uk/~vgg/data/pets/   2371cats
 
 ./other_cat   172 cats 
+
+voc cat   1124 cats 
