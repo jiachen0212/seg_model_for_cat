@@ -50,7 +50,7 @@ data:
         scale: [0.8, 1.25]
       - &resize
         type: Resize
-        output_size: [300, 300]
+        output_size: [400, 400]
       - type: RandomHorizontalFlip
         prob: 0.2
       - type: RandomVerticalFlip
@@ -160,7 +160,7 @@ visualize:
 
 deploy:
   type: OnnxDeploy
-  shapes: [1, 3, 300, 300]
+  shapes: [1, 3, 400, 400]
 
 analyze:
   type: TransformAnalyzer
