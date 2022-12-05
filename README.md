@@ -12,8 +12,8 @@ model for seg my cat, Lihua fugui.
 # 实验配置
 exp.yaml
 
-# Train Dataset
-1. voc中cat数据挑出来train   1124 cats
+ Train Dataset
+1. voc中cat数据挑出来train   1119 cats
 2.  other cat 网上找到的部分cat数据  172 cats 
 3. https://www.robots.ox.ac.uk/~vgg/data/pets/   2371cats
 

@@ -34,7 +34,7 @@ def check_connect_comp(img, label_index):
     return mask, num, label
 
 
-def sdk_post(predict, Confidence=None, num_thres=None):
+def sdk_post(predict, onnx_predict, Confidence=None, num_thres=None):
 
     num_class = predict.shape[1]
     map_ = np.argmax(onnx_predict[0], axis=1)
@@ -75,7 +75,7 @@ if __name__ == "__main__":
     mean_ = [123.675, 116.28, 103.53]
     std_ = [58.395, 57.12, 57.375]
     # 输入模型的尺寸
-    size = [300, 300]
+    size = [400, 400]
 
     test_paths = [os.path.join(img_path, a) for a in os.listdir(img_path) if '.JPG' in a]
     res_dir = os.path.join(root_path, 'seg_res')
@@ -97,7 +97,7 @@ if __name__ == "__main__":
         onnx_inputs = {onnx_session.get_inputs()[0].name: img_.astype(np.float32)}
         onnx_predict = onnx_session.run(None, onnx_inputs)
         predict = softmax(onnx_predict[0], 1)
-        map_ = sdk_post(predict, Confidence=Confidence, num_thres=num_thres)
+        map_ = sdk_post(predict, onnx_predict, Confidence=Confidence, num_thres=num_thres)
         # predict_map使用denscrf后处理优化下边缘, gaussian_, bilateral俩参数
         crf_map_ = CRFs(img, map_, gaussian_=5, bilateral_=10)
         mask_vis = label2colormap(map_)
