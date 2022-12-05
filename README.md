@@ -16,3 +16,6 @@ exp.yaml
 1. voc中cat数据挑出来train   1124 cats
 2.  other cat 网上找到的部分cat数据  172 cats 
 3. https://www.robots.ox.ac.uk/~vgg/data/pets/   2371cats
+
+# 其他
+分割结果边缘还是不够细节, 应该加一个边缘损失去监督优化的..[工具链上这玩意不方便加,简单粗暴用了个denscrf,优化效果不大稳定.]

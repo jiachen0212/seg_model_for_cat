@@ -109,7 +109,7 @@ if __name__ == "__main__":
 
         # res_merge = cv2.hconcat([res, crf_res])
         # cv2.imwrite(os.path.join(res_dir, img_base_name), res_merge)
-        #         
+         
         plt.subplot(121)
         plt.xlabel('model_result')
         plt.imshow(res[..., ::-1])
@@ -118,4 +118,3 @@ if __name__ == "__main__":
         plt.imshow(crf_res[..., ::-1])
         plt.savefig(os.path.join(res_dir, img_base_name))
   
-
