@@ -1,0 +1,1462 @@
+[2022-12-02 14:32:40,631][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] set seed: 0
+[2022-12-02 14:32:40,631][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] set deterministic: True
+[2022-12-02 14:32:40,709][WARNING][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] 'id'
+[2022-12-02 14:32:42,039][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Environment info:
+------------------------------------------------------------
+sys.platform: linux
+Python: 3.8.3 (default, Feb 23 2022, 10:37:38) [GCC 7.5.0]
+CUDA available: True
+CUDA_HOME: /usr/local/cuda
+NVCC: Build cuda_11.1.TC455_06.29190527_0
+GPU 0,1: NVIDIA GeForce RTX 3090
+GCC: gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0
+PyTorch: 1.8.1+cu111
+PyTorch compiling details: PyTorch built with:
+  - GCC 7.3
+  - C++ Version: 201402
+  - Intel(R) Math Kernel Library Version 2020.0.0 Product Build 20191122 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v1.7.0 (Git Hash 7aed236906b1f7a05c0917e5257a1af05e9ff683)
+  - OpenMP 201511 (a.k.a. OpenMP 4.5)
+  - NNPACK is enabled
+  - CPU capability usage: AVX2
+  - CUDA Runtime 11.1
+  - NVCC architecture flags: -gencode;arch=compute_37,code=sm_37;-gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86
+  - CuDNN 8.0.5
+  - Magma 2.5.2
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=11.1, CUDNN_VERSION=8.0.5, CXX_COMPILER=/opt/rh/devtoolset-7/root/usr/bin/c++, CXX_FLAGS= -Wno-deprecated -fvisibility-inlines-hidden -DUSE_PTHREADPOOL -fopenmp -DNDEBUG -DUSE_KINETO -DUSE_FBGEMM -DUSE_QNNPACK -DUSE_PYTORCH_QNNPACK -DUSE_XNNPACK -O2 -fPIC -Wno-narrowing -Wall -Wextra -Werror=return-type -Wno-missing-field-initializers -Wno-type-limits -Wno-array-bounds -Wno-unknown-pragmas -Wno-sign-compare -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function -Wno-unused-result -Wno-unused-local-typedefs -Wno-strict-overflow -Wno-strict-aliasing -Wno-error=deprecated-declarations -Wno-stringop-overflow -Wno-psabi -Wno-error=pedantic -Wno-error=redundant-decls -Wno-error=old-style-cast -fdiagnostics-color=always -faligned-new -Wno-unused-but-set-variable -Wno-maybe-uninitialized -fno-math-errno -fno-trapping-math -Werror=format -Wno-stringop-overflow, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_VERSION=1.8.1, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=ON, USE_NNPACK=ON, USE_OPENMP=ON, 
+
+TorchVision: 0.9.1+cu111
+OpenCV: 4.2.0
+------------------------------------------------------------
+
+[2022-12-02 14:32:42,040][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Config info:
+------------------------------------------------------------
+_cfg_from_file:
+  analyze:
+    label_map: ['bg', 'cat']
+    num_classes: 2
+    sample: 10
+    type: TransformAnalyzer
+  common:
+    deterministic: True
+    implement_layer: ['SMore_seg']
+    log_level: INFO
+    plugin_layer: []
+    seed: 0
+  data:
+    eval_data:
+      batch_size: 1
+      dataset: [{'type': 'MaskDataset', 'data_name': 'val', 'delimiter': '||', 'data_path': [{'root': '', 'path': '/newdata/jiachen/project/fugui/test.txt'}]}]
+      transform: [{'type': 'CvtColor', 'mode': 'BGR2RGB'}, {'type': 'Resize', 'output_size': [1024, 1024]}, {'type': 'Normalize', 'mean': [0.485, 0.456, 0.406], 'std': [0.229, 0.224, 0.225], 'scale': 1.0}, {'type': 'ToTensor'}]
+      workers: 2
+    test_data:
+      batch_size: 1
+      dataset: [{'type': 'MaskDataset', 'data_name': 'test', 'delimiter': '||', 'data_path': [{'root': '', 'path': '/newdata/jiachen/project/fugui/test.txt'}]}]
+      transform: [{'type': 'CvtColor', 'mode': 'BGR2RGB'}, {'type': 'Resize', 'output_size': [1024, 1024]}, {'type': 'Normalize', 'mean': [0.485, 0.456, 0.406], 'std': [0.229, 0.224, 0.225], 'scale': 1.0}, {'type': 'ToTensor'}]
+      workers: 2
+    train_data:
+      batch_size: 4
+      dataset:
+        data_name: train
+        data_path: [{'root': '', 'path': '/newdata/jiachen/project/fugui/train_cat.txt'}, {'root': '', 'path': '/newdata/jiachen/project/fugui/train_other_cat.txt'}]
+        delimiter: ||
+        type: MaskDataset
+      transform: [{'type': 'CvtColor', 'mode': 'BGR2RGB'}, {'type': 'Resize', 'output_size': [1024, 1024]}, {'type': 'RandomHorizontalFlip', 'prob': 0.2}, {'type': 'RandomVerticalFlip', 'prob': 0.2}, {'type': 'Normalize', 'mean': [0.485, 0.456, 0.406], 'std': [0.229, 0.224, 0.225], 'scale': 1.0}, {'type': 'ToTensor'}]
+      workers: 2
+  deploy:
+    shapes: [1, 3, 1024, 1024]
+    type: OnnxDeploy
+  eval:
+    evaluators: [{'type': 'PixelBasedEvaluator', 'num_classes': 2, 'label_map': ['bg', 'cat'], 'ignore_label': 255}]
+    type: SimpleInference
+    visualizer:
+      painters: [{'type': 'MaskPainter', 'num_classes': 2, 'label_map': ['bg', 'cat']}]
+      type: ConcatVisualizer
+  model:
+    backbone:
+      pretrained_weights: /newdata/jiachen/project/boer/d8x/demo/hrnet_w18_v2.pth
+      type: HRNetW18SmallV2
+    head:
+      in_index: [0, 1, 2, 3]
+      input_transform: resize_concat
+      kernel_size: 1
+      losses: [{'type': 'CE', 'num_classes': 2, 'ignore_label': 255, 'class_weights': [0.05, 1.0], 'weight': 1.8}, {'type': 'Dice', 'num_classes': 2, 'ignore_label': 255, 'weight': 3.0}]
+      num_classes: 2
+      type: FCNHead
+    type: EncoderDecoder
+  other:
+    category_map: [['bg'], ['cat']]
+    class_weight: [0.05, 1.0]
+    color_map: [[0, 0, 0], [128, 0, 100]]
+    ignore_label: 255
+    label_map: ['bg', 'cat']
+    mean: [0.485, 0.456, 0.406]
+    num_classes: 2
+    scale: 1.0
+    std: [0.229, 0.224, 0.225]
+    workers: 2
+  train:
+    ckpt_freq: 1000
+    lr_scheduler:
+      max_iter: 10000
+      type: WarmupCosineLR
+      warmup_iter: 80
+    max_iter: 10000
+    optimizer:
+      lr: 0.001
+      type: Adam
+    print_freq: 100
+    type: SimpleTrainer
+  visualize:
+    painters: [{'type': 'MaskPainter', 'num_classes': 2, 'label_map': ['bg', 'cat']}]
+    type: ConcatVisualizer
+_id: None
+_log_file: None
+_path: /newdata/jiachen/project/fugui/exp3
+_status_file: None
+analyze:
+  label_map: ['bg', 'cat']
+  num_classes: 2
+  sample: 10
+  type: TransformAnalyzer
+common:
+  deterministic: True
+  implement_layer: ['SMore_seg']
+  log_level: INFO
+  plugin_layer: []
+  seed: 0
+data:
+  eval_data:
+    batch_size: 1
+    dataset: [{'type': 'MaskDataset', 'data_name': 'val', 'delimiter': '||', 'data_path': [{'root': '', 'path': '/newdata/jiachen/project/fugui/test.txt'}]}]
+    group_dataset:
+      type: DefaultGroupDataset
+    pin_memory: True
+    transform: [{'type': 'CvtColor', 'mode': 'BGR2RGB'}, {'type': 'Resize', 'output_size': [1024, 1024]}, {'type': 'Normalize', 'mean': [0.485, 0.456, 0.406], 'std': [0.229, 0.224, 0.225], 'scale': 1.0}, {'type': 'ToTensor'}]
+    workers: 2
+  test_data:
+    batch_size: 1
+    dataset: [{'type': 'MaskDataset', 'data_name': 'test', 'delimiter': '||', 'data_path': [{'root': '', 'path': '/newdata/jiachen/project/fugui/test.txt'}]}]
+    group_dataset:
+      type: DefaultGroupDataset
+    pin_memory: True
+    transform: [{'type': 'CvtColor', 'mode': 'BGR2RGB'}, {'type': 'Resize', 'output_size': [1024, 1024]}, {'type': 'Normalize', 'mean': [0.485, 0.456, 0.406], 'std': [0.229, 0.224, 0.225], 'scale': 1.0}, {'type': 'ToTensor'}]
+    workers: 2
+  train_data:
+    batch_size: 4
+    dataset:
+      data_name: train
+      data_path: [{'root': '', 'path': '/newdata/jiachen/project/fugui/train_cat.txt'}, {'root': '', 'path': '/newdata/jiachen/project/fugui/train_other_cat.txt'}]
+      delimiter: ||
+      type: MaskDataset
+    group_dataset:
+      type: DefaultGroupDataset
+    pin_memory: True
+    transform: [{'type': 'CvtColor', 'mode': 'BGR2RGB'}, {'type': 'Resize', 'output_size': [1024, 1024]}, {'type': 'RandomHorizontalFlip', 'prob': 0.2}, {'type': 'RandomVerticalFlip', 'prob': 0.2}, {'type': 'Normalize', 'mean': [0.485, 0.456, 0.406], 'std': [0.229, 0.224, 0.225], 'scale': 1.0}, {'type': 'ToTensor'}]
+    workers: 2
+decrypt: False
+deploy:
+  shapes: [1, 3, 1024, 1024]
+  type: OnnxDeploy
+dump_result: False
+dump_vis: False
+eval:
+  evaluators: [{'type': 'PixelBasedEvaluator', 'num_classes': 2, 'label_map': ['bg', 'cat'], 'ignore_label': 255}]
+  type: SimpleInference
+  visualizer:
+    painters: [{'type': 'MaskPainter', 'num_classes': 2, 'label_map': ['bg', 'cat']}]
+    type: ConcatVisualizer
+force: True
+machine_rank: 0
+model:
+  backbone:
+    pretrained_weights: /newdata/jiachen/project/boer/d8x/demo/hrnet_w18_v2.pth
+    type: HRNetW18SmallV2
+  head:
+    in_index: [0, 1, 2, 3]
+    input_transform: resize_concat
+    kernel_size: 1
+    losses: [{'type': 'CE', 'num_classes': 2, 'ignore_label': 255, 'class_weights': [0.05, 1.0], 'weight': 1.8}, {'type': 'Dice', 'num_classes': 2, 'ignore_label': 255, 'weight': 3.0}]
+    num_classes: 2
+    type: FCNHead
+  type: EncoderDecoder
+no_notify: False
+num_gpus: 2
+num_machines: 1
+only_train: False
+other:
+  category_map: [['bg'], ['cat']]
+  class_weight: [0.05, 1.0]
+  color_map: [[0, 0, 0], [128, 0, 100]]
+  ignore_label: 255
+  label_map: ['bg', 'cat']
+  mean: [0.485, 0.456, 0.406]
+  num_classes: 2
+  scale: 1.0
+  std: [0.229, 0.224, 0.225]
+  workers: 2
+running_command: 
+start_time: 1669991560.6970727
+train:
+  batch_transform: []
+  ckpt_freq: 1000
+  early_stop_iter: None
+  lr_scheduler:
+    max_iter: 10000
+    type: WarmupCosineLR
+    warmup_iter: 80
+  max_iter: 10000
+  optimizer:
+    lr: 0.001
+    type: Adam
+  print_freq: 100
+  resume: None
+  type: SimpleTrainer
+  with_amp: False
+visualize:
+  painters: [{'type': 'MaskPainter', 'num_classes': 2, 'label_map': ['bg', 'cat']}]
+  type: ConcatVisualizer
+workers: 4
+------------------------------------------------------------
+
+[2022-12-02 14:32:42,171][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Config info:
+------------------------------------------------------------
+EncoderDecoder(
+  (backbone): HRNetW18SmallV2(
+    (conv1): Conv2d(3, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+    (bn1): SyncBatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+    (bn2): SyncBatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (relu): ReLU(inplace=True)
+    (layer1): Sequential(
+      (0): Bottleneck(
+        (conv1): Conv2d(64, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): SyncBatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): SyncBatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): SyncBatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+        (downsample): Sequential(
+          (0): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+          (1): SyncBatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        )
+      )
+      (1): Bottleneck(
+        (conv1): Conv2d(256, 64, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn1): SyncBatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (bn2): SyncBatchNorm(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (conv3): Conv2d(64, 256, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn3): SyncBatchNorm(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (relu): ReLU(inplace=True)
+      )
+    )
+    (transition1): ModuleList(
+      (0): Sequential(
+        (0): Conv2d(256, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+        (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU(inplace=True)
+      )
+      (1): Sequential(
+        (0): Sequential(
+          (0): Conv2d(256, 36, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+          (1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+        )
+      )
+    )
+    (stage2): Sequential(
+      (0): HRModule(
+        (branches): ModuleList(
+          (0): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+          )
+          (1): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+          )
+        )
+        (relus): ModuleList(
+          (0): ReLU()
+          (1): ReLU()
+        )
+        (fuse_layers): ModuleList(
+          (0): ModuleList(
+            (0): Identity()
+            (1): Sequential(
+              (0): Conv2d(36, 18, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+          )
+          (1): ModuleList(
+            (0): Sequential(
+              (0): Sequential(
+                (0): Conv2d(18, 36, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (1): Identity()
+          )
+        )
+        (upsamples): ModuleList(
+          (0): ModuleList(
+            (0): FModule()
+          )
+          (1): ModuleList()
+        )
+        (adds): ModuleList(
+          (0): ModuleList(
+            (0): AddModule()
+            (1): AddModule()
+          )
+          (1): ModuleList(
+            (0): AddModule()
+            (1): AddModule()
+          )
+        )
+      )
+    )
+    (transition2): ModuleList(
+      (0): Identity()
+      (1): Identity()
+      (2): Sequential(
+        (0): Sequential(
+          (0): Conv2d(36, 72, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+          (1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+        )
+      )
+    )
+    (stage3): Sequential(
+      (0): HRModule(
+        (branches): ModuleList(
+          (0): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+          )
+          (1): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+          )
+          (2): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+          )
+        )
+        (relus): ModuleList(
+          (0): ReLU()
+          (1): ReLU()
+          (2): ReLU()
+        )
+        (fuse_layers): ModuleList(
+          (0): ModuleList(
+            (0): Identity()
+            (1): Sequential(
+              (0): Conv2d(36, 18, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+            (2): Sequential(
+              (0): Conv2d(72, 18, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+          )
+          (1): ModuleList(
+            (0): Sequential(
+              (0): Sequential(
+                (0): Conv2d(18, 36, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (1): Identity()
+            (2): Sequential(
+              (0): Conv2d(72, 36, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+          )
+          (2): ModuleList(
+            (0): Sequential(
+              (0): Sequential(
+                (0): Conv2d(18, 18, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                (2): ReLU()
+              )
+              (1): Sequential(
+                (0): Conv2d(18, 72, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (1): Sequential(
+              (0): Sequential(
+                (0): Conv2d(36, 72, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (2): Identity()
+          )
+        )
+        (upsamples): ModuleList(
+          (0): ModuleList(
+            (0): FModule()
+            (1): FModule()
+          )
+          (1): ModuleList(
+            (0): FModule()
+          )
+          (2): ModuleList()
+        )
+        (adds): ModuleList(
+          (0): ModuleList(
+            (0): AddModule()
+            (1): AddModule()
+            (2): AddModule()
+          )
+          (1): ModuleList(
+            (0): AddModule()
+            (1): AddModule()
+            (2): AddModule()
+          )
+          (2): ModuleList(
+            (0): AddModule()
+            (1): AddModule()
+            (2): AddModule()
+          )
+        )
+      )
+      (1): HRModule(
+        (branches): ModuleList(
+          (0): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+          )
+          (1): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+          )
+          (2): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+          )
+        )
+        (relus): ModuleList(
+          (0): ReLU()
+          (1): ReLU()
+          (2): ReLU()
+        )
+        (fuse_layers): ModuleList(
+          (0): ModuleList(
+            (0): Identity()
+            (1): Sequential(
+              (0): Conv2d(36, 18, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+            (2): Sequential(
+              (0): Conv2d(72, 18, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+          )
+          (1): ModuleList(
+            (0): Sequential(
+              (0): Sequential(
+                (0): Conv2d(18, 36, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (1): Identity()
+            (2): Sequential(
+              (0): Conv2d(72, 36, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+          )
+          (2): ModuleList(
+            (0): Sequential(
+              (0): Sequential(
+                (0): Conv2d(18, 18, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                (2): ReLU()
+              )
+              (1): Sequential(
+                (0): Conv2d(18, 72, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (1): Sequential(
+              (0): Sequential(
+                (0): Conv2d(36, 72, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (2): Identity()
+          )
+        )
+        (upsamples): ModuleList(
+          (0): ModuleList(
+            (0): FModule()
+            (1): FModule()
+          )
+          (1): ModuleList(
+            (0): FModule()
+          )
+          (2): ModuleList()
+        )
+        (adds): ModuleList(
+          (0): ModuleList(
+            (0): AddModule()
+            (1): AddModule()
+            (2): AddModule()
+          )
+          (1): ModuleList(
+            (0): AddModule()
+            (1): AddModule()
+            (2): AddModule()
+          )
+          (2): ModuleList(
+            (0): AddModule()
+            (1): AddModule()
+            (2): AddModule()
+          )
+        )
+      )
+      (2): HRModule(
+        (branches): ModuleList(
+          (0): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+          )
+          (1): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+          )
+          (2): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+          )
+        )
+        (relus): ModuleList(
+          (0): ReLU()
+          (1): ReLU()
+          (2): ReLU()
+        )
+        (fuse_layers): ModuleList(
+          (0): ModuleList(
+            (0): Identity()
+            (1): Sequential(
+              (0): Conv2d(36, 18, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+            (2): Sequential(
+              (0): Conv2d(72, 18, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+          )
+          (1): ModuleList(
+            (0): Sequential(
+              (0): Sequential(
+                (0): Conv2d(18, 36, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (1): Identity()
+            (2): Sequential(
+              (0): Conv2d(72, 36, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+          )
+          (2): ModuleList(
+            (0): Sequential(
+              (0): Sequential(
+                (0): Conv2d(18, 18, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                (2): ReLU()
+              )
+              (1): Sequential(
+                (0): Conv2d(18, 72, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (1): Sequential(
+              (0): Sequential(
+                (0): Conv2d(36, 72, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (2): Identity()
+          )
+        )
+        (upsamples): ModuleList(
+          (0): ModuleList(
+            (0): FModule()
+            (1): FModule()
+          )
+          (1): ModuleList(
+            (0): FModule()
+          )
+          (2): ModuleList()
+        )
+        (adds): ModuleList(
+          (0): ModuleList(
+            (0): AddModule()
+            (1): AddModule()
+            (2): AddModule()
+          )
+          (1): ModuleList(
+            (0): AddModule()
+            (1): AddModule()
+            (2): AddModule()
+          )
+          (2): ModuleList(
+            (0): AddModule()
+            (1): AddModule()
+            (2): AddModule()
+          )
+        )
+      )
+    )
+    (transition3): ModuleList(
+      (0): Identity()
+      (1): Identity()
+      (2): Identity()
+      (3): Sequential(
+        (0): Sequential(
+          (0): Conv2d(72, 144, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+          (1): SyncBatchNorm(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+          (2): ReLU(inplace=True)
+        )
+      )
+    )
+    (stage4): Sequential(
+      (0): HRModule(
+        (branches): ModuleList(
+          (0): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+          )
+          (1): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+          )
+          (2): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+          )
+          (3): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(144, 144, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(144, 144, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(144, 144, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(144, 144, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+          )
+        )
+        (relus): ModuleList(
+          (0): ReLU()
+          (1): ReLU()
+          (2): ReLU()
+          (3): ReLU()
+        )
+        (fuse_layers): ModuleList(
+          (0): ModuleList(
+            (0): Identity()
+            (1): Sequential(
+              (0): Conv2d(36, 18, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+            (2): Sequential(
+              (0): Conv2d(72, 18, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+            (3): Sequential(
+              (0): Conv2d(144, 18, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+          )
+          (1): ModuleList(
+            (0): Sequential(
+              (0): Sequential(
+                (0): Conv2d(18, 36, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (1): Identity()
+            (2): Sequential(
+              (0): Conv2d(72, 36, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+            (3): Sequential(
+              (0): Conv2d(144, 36, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+          )
+          (2): ModuleList(
+            (0): Sequential(
+              (0): Sequential(
+                (0): Conv2d(18, 18, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                (2): ReLU()
+              )
+              (1): Sequential(
+                (0): Conv2d(18, 72, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (1): Sequential(
+              (0): Sequential(
+                (0): Conv2d(36, 72, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (2): Identity()
+            (3): Sequential(
+              (0): Conv2d(144, 72, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+          )
+          (3): ModuleList(
+            (0): Sequential(
+              (0): Sequential(
+                (0): Conv2d(18, 18, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                (2): ReLU()
+              )
+              (1): Sequential(
+                (0): Conv2d(18, 18, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                (2): ReLU()
+              )
+              (2): Sequential(
+                (0): Conv2d(18, 144, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (1): Sequential(
+              (0): Sequential(
+                (0): Conv2d(36, 36, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                (2): ReLU()
+              )
+              (1): Sequential(
+                (0): Conv2d(36, 144, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (2): Sequential(
+              (0): Sequential(
+                (0): Conv2d(72, 144, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (3): Identity()
+          )
+        )
+        (upsamples): ModuleList(
+          (0): ModuleList(
+            (0): FModule()
+            (1): FModule()
+            (2): FModule()
+          )
+          (1): ModuleList(
+            (0): FModule()
+            (1): FModule()
+          )
+          (2): ModuleList(
+            (0): FModule()
+          )
+          (3): ModuleList()
+        )
+        (adds): ModuleList(
+          (0): ModuleList(
+            (0): AddModule()
+            (1): AddModule()
+            (2): AddModule()
+            (3): AddModule()
+          )
+          (1): ModuleList(
+            (0): AddModule()
+            (1): AddModule()
+            (2): AddModule()
+            (3): AddModule()
+          )
+          (2): ModuleList(
+            (0): AddModule()
+            (1): AddModule()
+            (2): AddModule()
+            (3): AddModule()
+          )
+          (3): ModuleList(
+            (0): AddModule()
+            (1): AddModule()
+            (2): AddModule()
+            (3): AddModule()
+          )
+        )
+      )
+      (1): HRModule(
+        (branches): ModuleList(
+          (0): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(18, 18, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+          )
+          (1): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(36, 36, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+          )
+          (2): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(72, 72, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+          )
+          (3): Sequential(
+            (0): BasicBlock(
+              (conv1): Conv2d(144, 144, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(144, 144, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+            (1): BasicBlock(
+              (conv1): Conv2d(144, 144, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn1): SyncBatchNorm(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (conv2): Conv2d(144, 144, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False)
+              (bn2): SyncBatchNorm(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              (relu): ReLU(inplace=True)
+            )
+          )
+        )
+        (relus): ModuleList(
+          (0): ReLU()
+          (1): ReLU()
+          (2): ReLU()
+          (3): ReLU()
+        )
+        (fuse_layers): ModuleList(
+          (0): ModuleList(
+            (0): Identity()
+            (1): Sequential(
+              (0): Conv2d(36, 18, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+            (2): Sequential(
+              (0): Conv2d(72, 18, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+            (3): Sequential(
+              (0): Conv2d(144, 18, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+          )
+          (1): ModuleList(
+            (0): Sequential(
+              (0): Sequential(
+                (0): Conv2d(18, 36, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (1): Identity()
+            (2): Sequential(
+              (0): Conv2d(72, 36, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+            (3): Sequential(
+              (0): Conv2d(144, 36, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+          )
+          (2): ModuleList(
+            (0): Sequential(
+              (0): Sequential(
+                (0): Conv2d(18, 18, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                (2): ReLU()
+              )
+              (1): Sequential(
+                (0): Conv2d(18, 72, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (1): Sequential(
+              (0): Sequential(
+                (0): Conv2d(36, 72, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (2): Identity()
+            (3): Sequential(
+              (0): Conv2d(144, 72, kernel_size=(1, 1), stride=(1, 1), bias=False)
+              (1): SyncBatchNorm(72, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+            )
+          )
+          (3): ModuleList(
+            (0): Sequential(
+              (0): Sequential(
+                (0): Conv2d(18, 18, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                (2): ReLU()
+              )
+              (1): Sequential(
+                (0): Conv2d(18, 18, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(18, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                (2): ReLU()
+              )
+              (2): Sequential(
+                (0): Conv2d(18, 144, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (1): Sequential(
+              (0): Sequential(
+                (0): Conv2d(36, 36, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(36, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+                (2): ReLU()
+              )
+              (1): Sequential(
+                (0): Conv2d(36, 144, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (2): Sequential(
+              (0): Sequential(
+                (0): Conv2d(72, 144, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+                (1): SyncBatchNorm(144, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+              )
+            )
+            (3): Identity()
+          )
+        )
+        (upsamples): ModuleList(
+          (0): ModuleList(
+            (0): FModule()
+            (1): FModule()
+            (2): FModule()
+          )
+          (1): ModuleList(
+            (0): FModule()
+            (1): FModule()
+          )
+          (2): ModuleList(
+            (0): FModule()
+          )
+          (3): ModuleList()
+        )
+        (adds): ModuleList(
+          (0): ModuleList(
+            (0): AddModule()
+            (1): AddModule()
+            (2): AddModule()
+            (3): AddModule()
+          )
+          (1): ModuleList(
+            (0): AddModule()
+            (1): AddModule()
+            (2): AddModule()
+            (3): AddModule()
+          )
+          (2): ModuleList(
+            (0): AddModule()
+            (1): AddModule()
+            (2): AddModule()
+            (3): AddModule()
+          )
+          (3): ModuleList(
+            (0): AddModule()
+            (1): AddModule()
+            (2): AddModule()
+            (3): AddModule()
+          )
+        )
+      )
+    )
+  )
+  (head): FCNHead(
+    (interpolate): FModule()
+    (losses): ModuleList(
+      (0): CE(
+        (fn): CrossEntropyLoss()
+      )
+      (1): Dice()
+    )
+    (convs): Sequential(
+      (0): ConvModule(
+        (conv): Conv2d(270, 270, kernel_size=(1, 1), stride=(1, 1), bias=False)
+        (bn): SyncBatchNorm(270, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (activate): ReLU(inplace=True)
+      )
+    )
+    (last_layer): ConvModule(
+      (conv): Conv2d(270, 2, kernel_size=(1, 1), stride=(1, 1))
+    )
+  )
+)
+------------------------------------------------------------
+
+[2022-12-02 14:32:42,171][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] pretrained_weights is None, init weights.
+[2022-12-02 14:32:42,223][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Load [backbone] pretrained-weights
+[2022-12-02 14:32:42,223][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Loading checkpoint from /newdata/jiachen/project/boer/d8x/demo/hrnet_w18_v2.pth
+[2022-12-02 14:32:43,613][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Load [head] pretrained-weights
+[2022-12-02 14:32:43,613][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] pretrained_weights is None, init weights.
+[2022-12-02 14:32:43,755][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Starting training from iteration 1
+[2022-12-02 14:33:36,665][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:17:25  iter: 100 progress: 1 head/CE: 0.5450  head/Dice: 0.6937 head/acc: 77.7484 time: 0.469   data_time: 0.007  forward_time: 0.340  backward_time: 0.111  lr: 0.001000  max_mem: 6247M
+[2022-12-02 14:34:22,429][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:16:26  iter: 200 progress: 2 head/CE: 0.3517  head/Dice: 0.6106 head/acc: 81.9058 time: 0.468   data_time: 0.006  forward_time: 0.342  backward_time: 0.108  lr: 0.000999  max_mem: 6247M
+[2022-12-02 14:35:07,647][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:13:21  iter: 300 progress: 3 head/CE: 0.3096  head/Dice: 0.4679 head/acc: 85.5190 time: 0.454   data_time: 0.005  forward_time: 0.324  backward_time: 0.106  lr: 0.000998  max_mem: 6247M
+[2022-12-02 14:35:53,747][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:13:22  iter: 400 progress: 4 head/CE: 0.2681  head/Dice: 0.3886 head/acc: 88.0116 time: 0.459   data_time: 0.006  forward_time: 0.334  backward_time: 0.103  lr: 0.000996  max_mem: 6247M
+[2022-12-02 14:36:39,506][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:11:59  iter: 500 progress: 5 head/CE: 0.2088  head/Dice: 0.4118 head/acc: 88.1251 time: 0.455   data_time: 0.008  forward_time: 0.334  backward_time: 0.111  lr: 0.000994  max_mem: 6247M
+[2022-12-02 14:37:25,518][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:10:38  iter: 600 progress: 6 head/CE: 0.2228  head/Dice: 0.3546 head/acc: 89.5309 time: 0.451   data_time: 0.005  forward_time: 0.334  backward_time: 0.101  lr: 0.000991  max_mem: 6247M
+[2022-12-02 14:38:10,628][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:08:58  iter: 700 progress: 7 head/CE: 0.1745  head/Dice: 0.3629 head/acc: 88.8732 time: 0.445   data_time: 0.006  forward_time: 0.318  backward_time: 0.111  lr: 0.000988  max_mem: 6247M
+[2022-12-02 14:38:56,148][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:08:16  iter: 800 progress: 8 head/CE: 0.1735  head/Dice: 0.3136 head/acc: 90.9774 time: 0.445   data_time: 0.007  forward_time: 0.320  backward_time: 0.107  lr: 0.000984  max_mem: 6247M
+[2022-12-02 14:39:41,232][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:05:36  iter: 900 progress: 9 head/CE: 0.2183  head/Dice: 0.3235 head/acc: 90.2498 time: 0.433   data_time: 0.005  forward_time: 0.317  backward_time: 0.108  lr: 0.000980  max_mem: 6247M
+[2022-12-02 14:40:26,469][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Saving checkpoint to /newdata/jiachen/project/fugui/exp3/model/model_1000.pth
+[2022-12-02 14:40:26,831][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Start inference on 1 iterations
+[2022-12-02 14:40:29,847][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Inference done 1/1.Iter Time: 3.0162. ETA=0:00:00
+[2022-12-02 14:40:30,171][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Evaluation results for val in csv format:
+[2022-12-02 14:40:30,172][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] {
+    "PixelBasedEvaluator/iou/bg": 66.11799057588374,
+    "PixelBasedEvaluator/iou/cat": 30.748844655801914,
+    "PixelBasedEvaluator/iou/mean": 48.43341761584283,
+    "PixelBasedEvaluator/recall/bg": 68.87087958247464,
+    "PixelBasedEvaluator/recall/cat": 79.00802350928159,
+    "PixelBasedEvaluator/recall/mean": 73.93945154587811,
+    "PixelBasedEvaluator/precision/bg": 94.29913032259611,
+    "PixelBasedEvaluator/precision/cat": 33.48445454492812,
+    "PixelBasedEvaluator/precision/mean": 63.89179243376212
+}
+[2022-12-02 14:40:30,174][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:08:17  iter: 1000 progress: 10 head/CE: 0.2013  head/Dice: 0.3110 head/acc: 90.9569 time: 0.455   data_time: 0.007  forward_time: 0.331  backward_time: 0.105  lr: 0.000976  max_mem: 6247M
+[2022-12-02 14:41:15,647][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:06:36  iter: 1100 progress: 11 head/CE: 0.1716  head/Dice: 0.3298 head/acc: 90.2620 time: 0.449   data_time: 0.006  forward_time: 0.323  backward_time: 0.111  lr: 0.000970  max_mem: 6248M
+[2022-12-02 14:42:01,791][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:05:03  iter: 1200 progress: 12 head/CE: 0.1420  head/Dice: 0.2530 head/acc: 92.9934 time: 0.444   data_time: 0.006  forward_time: 0.323  backward_time: 0.111  lr: 0.000965  max_mem: 6248M
+[2022-12-02 14:42:47,103][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:05:22  iter: 1300 progress: 13 head/CE: 0.2211  head/Dice: 0.3527 head/acc: 90.1229 time: 0.451   data_time: 0.005  forward_time: 0.324  backward_time: 0.111  lr: 0.000959  max_mem: 6248M
+[2022-12-02 14:43:32,452][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:05:40  iter: 1400 progress: 14 head/CE: 0.1657  head/Dice: 0.3281 head/acc: 90.4908 time: 0.458   data_time: 0.006  forward_time: 0.321  backward_time: 0.106  lr: 0.000952  max_mem: 6248M
+[2022-12-02 14:44:18,172][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:03:49  iter: 1500 progress: 15 head/CE: 0.1829  head/Dice: 0.3679 head/acc: 89.0479 time: 0.451   data_time: 0.007  forward_time: 0.325  backward_time: 0.109  lr: 0.000946  max_mem: 6248M
+[2022-12-02 14:45:03,774][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:02:16  iter: 1600 progress: 16 head/CE: 0.1658  head/Dice: 0.2785 head/acc: 92.3496 time: 0.445   data_time: 0.008  forward_time: 0.323  backward_time: 0.111  lr: 0.000938  max_mem: 6248M
+[2022-12-02 14:45:49,404][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:02:43  iter: 1700 progress: 17 head/CE: 0.1542  head/Dice: 0.2842 head/acc: 91.3361 time: 0.453   data_time: 0.006  forward_time: 0.326  backward_time: 0.111  lr: 0.000930  max_mem: 6248M
+[2022-12-02 14:46:35,008][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:01:45  iter: 1800 progress: 18 head/CE: 0.1782  head/Dice: 0.3012 head/acc: 91.4229 time: 0.452   data_time: 0.006  forward_time: 0.324  backward_time: 0.111  lr: 0.000922  max_mem: 6248M
+[2022-12-02 14:47:20,608][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:02:25  iter: 1900 progress: 19 head/CE: 0.1964  head/Dice: 0.2920 head/acc: 91.6511 time: 0.462   data_time: 0.010  forward_time: 0.328  backward_time: 0.114  lr: 0.000914  max_mem: 6248M
+[2022-12-02 14:48:06,355][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Saving checkpoint to /newdata/jiachen/project/fugui/exp3/model/model_2000.pth
+[2022-12-02 14:48:06,794][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Start inference on 1 iterations
+[2022-12-02 14:48:09,568][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Inference done 1/1.Iter Time: 2.774. ETA=0:00:00
+[2022-12-02 14:48:09,959][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Evaluation results for val in csv format:
+[2022-12-02 14:48:09,960][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] {
+    "PixelBasedEvaluator/iou/bg": 77.38834579396213,
+    "PixelBasedEvaluator/iou/cat": 42.363099128765626,
+    "PixelBasedEvaluator/iou/mean": 59.87572246136388,
+    "PixelBasedEvaluator/recall/bg": 79.52160359355985,
+    "PixelBasedEvaluator/recall/cat": 86.10200808446862,
+    "PixelBasedEvaluator/recall/mean": 82.81180583901423,
+    "PixelBasedEvaluator/precision/bg": 96.64970400858394,
+    "PixelBasedEvaluator/precision/cat": 45.47248934959688,
+    "PixelBasedEvaluator/precision/mean": 71.06109667909041
+}
+[2022-12-02 14:48:09,962][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:00:23  iter: 2000 progress: 20 head/CE: 0.1507  head/Dice: 0.2637 head/acc: 92.2125 time: 0.453   data_time: 0.007  forward_time: 0.328  backward_time: 0.108  lr: 0.000905  max_mem: 6248M
+[2022-12-02 14:48:55,650][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 1:00:26  iter: 2100 progress: 21 head/CE: 0.1586  head/Dice: 0.2789 head/acc: 92.1296 time: 0.459   data_time: 0.007  forward_time: 0.340  backward_time: 0.103  lr: 0.000895  max_mem: 6250M
+[2022-12-02 14:49:40,888][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:58:01  iter: 2200 progress: 22 head/CE: 0.1801  head/Dice: 0.3143 head/acc: 91.6115 time: 0.446   data_time: 0.006  forward_time: 0.310  backward_time: 0.112  lr: 0.000885  max_mem: 6250M
+[2022-12-02 14:50:26,931][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:59:38  iter: 2300 progress: 23 head/CE: 0.1498  head/Dice: 0.2789 head/acc: 91.8912 time: 0.465   data_time: 0.007  forward_time: 0.339  backward_time: 0.107  lr: 0.000875  max_mem: 6250M
+[2022-12-02 14:51:12,162][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:58:51  iter: 2400 progress: 24 head/CE: 0.1883  head/Dice: 0.3053 head/acc: 90.8905 time: 0.465   data_time: 0.007  forward_time: 0.323  backward_time: 0.114  lr: 0.000865  max_mem: 6250M
+[2022-12-02 14:51:58,281][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:58:51  iter: 2500 progress: 25 head/CE: 0.1523  head/Dice: 0.2643 head/acc: 92.8592 time: 0.471   data_time: 0.007  forward_time: 0.332  backward_time: 0.112  lr: 0.000854  max_mem: 6250M
+[2022-12-02 14:52:43,887][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:56:56  iter: 2600 progress: 26 head/CE: 0.1426  head/Dice: 0.2496 head/acc: 92.9278 time: 0.462   data_time: 0.007  forward_time: 0.332  backward_time: 0.115  lr: 0.000842  max_mem: 6250M
+[2022-12-02 14:53:29,732][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:54:32  iter: 2700 progress: 27 head/CE: 0.1256  head/Dice: 0.2205 head/acc: 93.7369 time: 0.448   data_time: 0.007  forward_time: 0.323  backward_time: 0.101  lr: 0.000831  max_mem: 6250M
+[2022-12-02 14:54:15,038][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:54:13  iter: 2800 progress: 28 head/CE: 0.1370  head/Dice: 0.2467 head/acc: 92.8215 time: 0.452   data_time: 0.006  forward_time: 0.323  backward_time: 0.117  lr: 0.000819  max_mem: 6250M
+[2022-12-02 14:55:01,063][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:54:03  iter: 2900 progress: 29 head/CE: 0.1179  head/Dice: 0.2285 head/acc: 93.6069 time: 0.457   data_time: 0.008  forward_time: 0.338  backward_time: 0.106  lr: 0.000807  max_mem: 6250M
+[2022-12-02 14:55:46,281][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Saving checkpoint to /newdata/jiachen/project/fugui/exp3/model/model_3000.pth
+[2022-12-02 14:55:46,677][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Start inference on 1 iterations
+[2022-12-02 14:55:49,628][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Inference done 1/1.Iter Time: 2.9503. ETA=0:00:00
+[2022-12-02 14:55:49,909][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Evaluation results for val in csv format:
+[2022-12-02 14:55:49,910][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] {
+    "PixelBasedEvaluator/iou/bg": 78.26893578022549,
+    "PixelBasedEvaluator/iou/cat": 41.52487835716659,
+    "PixelBasedEvaluator/iou/mean": 59.89690706869604,
+    "PixelBasedEvaluator/recall/bg": 81.253989450964,
+    "PixelBasedEvaluator/recall/cat": 80.77142983265612,
+    "PixelBasedEvaluator/recall/mean": 81.01270964181006,
+    "PixelBasedEvaluator/precision/bg": 95.51670462559848,
+    "PixelBasedEvaluator/precision/cat": 46.08011733145296,
+    "PixelBasedEvaluator/precision/mean": 70.79841097852572
+}
+[2022-12-02 14:55:49,911][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:53:06  iter: 3000 progress: 30 head/CE: 0.1380  head/Dice: 0.2630 head/acc: 92.5791 time: 0.455   data_time: 0.007  forward_time: 0.323  backward_time: 0.112  lr: 0.000794  max_mem: 6250M
+[2022-12-02 14:56:35,128][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:50:51  iter: 3100 progress: 31 head/CE: 0.1615  head/Dice: 0.2382 head/acc: 92.9675 time: 0.442   data_time: 0.006  forward_time: 0.317  backward_time: 0.111  lr: 0.000781  max_mem: 6250M
+[2022-12-02 14:57:21,349][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:52:32  iter: 3200 progress: 32 head/CE: 0.1372  head/Dice: 0.2575 head/acc: 92.4584 time: 0.464   data_time: 0.008  forward_time: 0.334  backward_time: 0.111  lr: 0.000768  max_mem: 6250M
+[2022-12-02 14:58:06,664][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:50:53  iter: 3300 progress: 33 head/CE: 0.1085  head/Dice: 0.2014 head/acc: 94.4084 time: 0.456   data_time: 0.009  forward_time: 0.335  backward_time: 0.108  lr: 0.000755  max_mem: 6250M
+[2022-12-02 14:58:52,262][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:50:27  iter: 3400 progress: 34 head/CE: 0.1257  head/Dice: 0.2265 head/acc: 93.6212 time: 0.459   data_time: 0.008  forward_time: 0.321  backward_time: 0.114  lr: 0.000741  max_mem: 6250M
+[2022-12-02 14:59:38,001][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:48:04  iter: 3500 progress: 35 head/CE: 0.1408  head/Dice: 0.2413 head/acc: 93.1675 time: 0.444   data_time: 0.009  forward_time: 0.326  backward_time: 0.107  lr: 0.000727  max_mem: 6250M
+[2022-12-02 15:00:23,106][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:46:59  iter: 3600 progress: 36 head/CE: 0.1236  head/Dice: 0.2327 head/acc: 93.3548 time: 0.441   data_time: 0.007  forward_time: 0.318  backward_time: 0.110  lr: 0.000713  max_mem: 6250M
+[2022-12-02 15:01:08,708][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:47:41  iter: 3700 progress: 37 head/CE: 0.1145  head/Dice: 0.1988 head/acc: 94.2554 time: 0.454   data_time: 0.005  forward_time: 0.330  backward_time: 0.112  lr: 0.000699  max_mem: 6250M
+[2022-12-02 15:01:54,385][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:46:35  iter: 3800 progress: 38 head/CE: 0.1103  head/Dice: 0.2079 head/acc: 94.2853 time: 0.451   data_time: 0.009  forward_time: 0.315  backward_time: 0.112  lr: 0.000684  max_mem: 6250M
+[2022-12-02 15:02:39,888][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:45:18  iter: 3900 progress: 39 head/CE: 0.0941  head/Dice: 0.2063 head/acc: 94.1508 time: 0.446   data_time: 0.008  forward_time: 0.310  backward_time: 0.111  lr: 0.000670  max_mem: 6250M
+[2022-12-02 15:03:25,465][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Saving checkpoint to /newdata/jiachen/project/fugui/exp3/model/model_4000.pth
+[2022-12-02 15:03:25,836][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Start inference on 1 iterations
+[2022-12-02 15:03:28,673][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Inference done 1/1.Iter Time: 2.8361. ETA=0:00:00
+[2022-12-02 15:03:29,009][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Evaluation results for val in csv format:
+[2022-12-02 15:03:29,009][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] {
+    "PixelBasedEvaluator/iou/bg": 74.04325165674152,
+    "PixelBasedEvaluator/iou/cat": 38.82487098393167,
+    "PixelBasedEvaluator/iou/mean": 56.434061320336596,
+    "PixelBasedEvaluator/recall/bg": 76.1797205185046,
+    "PixelBasedEvaluator/recall/cat": 85.45226569019627,
+    "PixelBasedEvaluator/recall/mean": 80.81599310435044,
+    "PixelBasedEvaluator/precision/bg": 96.35056222671732,
+    "PixelBasedEvaluator/precision/cat": 41.57270220851417,
+    "PixelBasedEvaluator/precision/mean": 68.96163221761574
+}
+[2022-12-02 15:03:29,011][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:44:37  iter: 4000 progress: 40 head/CE: 0.1149  head/Dice: 0.2102 head/acc: 94.0217 time: 0.446   data_time: 0.006  forward_time: 0.314  backward_time: 0.114  lr: 0.000655  max_mem: 6250M
+[2022-12-02 15:04:14,729][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:43:15  iter: 4100 progress: 41 head/CE: 0.1207  head/Dice: 0.2445 head/acc: 93.1947 time: 0.440   data_time: 0.008  forward_time: 0.317  backward_time: 0.104  lr: 0.000640  max_mem: 6250M
+[2022-12-02 15:05:00,219][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:44:18  iter: 4200 progress: 42 head/CE: 0.1217  head/Dice: 0.2222 head/acc: 94.0094 time: 0.458   data_time: 0.009  forward_time: 0.333  backward_time: 0.105  lr: 0.000624  max_mem: 6250M
+[2022-12-02 15:05:45,526][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:42:45  iter: 4300 progress: 43 head/CE: 0.1164  head/Dice: 0.2017 head/acc: 94.3142 time: 0.450   data_time: 0.009  forward_time: 0.313  backward_time: 0.116  lr: 0.000609  max_mem: 6250M
+[2022-12-02 15:06:31,602][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:43:12  iter: 4400 progress: 44 head/CE: 0.1167  head/Dice: 0.2187 head/acc: 93.6717 time: 0.463   data_time: 0.007  forward_time: 0.346  backward_time: 0.101  lr: 0.000594  max_mem: 6250M
+[2022-12-02 15:07:15,532][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:40:46  iter: 4500 progress: 45 head/CE: 0.0997  head/Dice: 0.2063 head/acc: 94.0617 time: 0.445   data_time: 0.006  forward_time: 0.311  backward_time: 0.112  lr: 0.000578  max_mem: 6250M
+[2022-12-02 15:08:00,039][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:39:32  iter: 4600 progress: 46 head/CE: 0.1010  head/Dice: 0.2203 head/acc: 93.4066 time: 0.439   data_time: 0.005  forward_time: 0.319  backward_time: 0.105  lr: 0.000563  max_mem: 6250M
+[2022-12-02 15:08:45,360][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:40:28  iter: 4700 progress: 47 head/CE: 0.1142  head/Dice: 0.1997 head/acc: 94.2658 time: 0.458   data_time: 0.007  forward_time: 0.333  backward_time: 0.113  lr: 0.000547  max_mem: 6250M
+[2022-12-02 15:09:30,945][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:40:52  iter: 4800 progress: 48 head/CE: 0.1194  head/Dice: 0.2092 head/acc: 94.1202 time: 0.472   data_time: 0.006  forward_time: 0.339  backward_time: 0.110  lr: 0.000532  max_mem: 6250M
+[2022-12-02 15:10:16,278][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:38:37  iter: 4900 progress: 49 head/CE: 0.1244  head/Dice: 0.2299 head/acc: 93.4037 time: 0.454   data_time: 0.006  forward_time: 0.326  backward_time: 0.110  lr: 0.000516  max_mem: 6250M
+[2022-12-02 15:11:01,750][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Saving checkpoint to /newdata/jiachen/project/fugui/exp3/model/model_5000.pth
+[2022-12-02 15:11:02,098][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Start inference on 1 iterations
+[2022-12-02 15:11:04,902][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Inference done 1/1.Iter Time: 2.804. ETA=0:00:00
+[2022-12-02 15:11:05,249][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Evaluation results for val in csv format:
+[2022-12-02 15:11:05,250][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] {
+    "PixelBasedEvaluator/iou/bg": 81.5468066098789,
+    "PixelBasedEvaluator/iou/cat": 45.24445205903209,
+    "PixelBasedEvaluator/iou/mean": 63.39562933445549,
+    "PixelBasedEvaluator/recall/bg": 84.79203573213904,
+    "PixelBasedEvaluator/recall/cat": 79.93576147664521,
+    "PixelBasedEvaluator/recall/mean": 82.36389860439212,
+    "PixelBasedEvaluator/precision/bg": 95.51704655130872,
+    "PixelBasedEvaluator/precision/cat": 51.04094942425987,
+    "PixelBasedEvaluator/precision/mean": 73.2789979877843
+}
+[2022-12-02 15:11:05,251][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:38:50  iter: 5000 progress: 50 head/CE: 0.0871  head/Dice: 0.1942 head/acc: 94.4126 time: 0.466   data_time: 0.008  forward_time: 0.331  backward_time: 0.115  lr: 0.000500  max_mem: 6250M
+[2022-12-02 15:11:49,965][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:37:09  iter: 5100 progress: 51 head/CE: 0.0930  head/Dice: 0.1557 head/acc: 95.5894 time: 0.455   data_time: 0.006  forward_time: 0.324  backward_time: 0.111  lr: 0.000484  max_mem: 6250M
+[2022-12-02 15:12:35,217][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:35:46  iter: 5200 progress: 52 head/CE: 0.0914  head/Dice: 0.1708 head/acc: 95.1173 time: 0.447   data_time: 0.007  forward_time: 0.318  backward_time: 0.112  lr: 0.000469  max_mem: 6250M
+[2022-12-02 15:13:20,843][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:36:41  iter: 5300 progress: 53 head/CE: 0.0932  head/Dice: 0.1716 head/acc: 95.1143 time: 0.468   data_time: 0.006  forward_time: 0.338  backward_time: 0.110  lr: 0.000453  max_mem: 6250M
+[2022-12-02 15:14:06,275][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:33:45  iter: 5400 progress: 54 head/CE: 0.0973  head/Dice: 0.1934 head/acc: 94.4233 time: 0.440   data_time: 0.005  forward_time: 0.320  backward_time: 0.104  lr: 0.000437  max_mem: 6250M
+[2022-12-02 15:14:51,897][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:34:58  iter: 5500 progress: 55 head/CE: 0.0809  head/Dice: 0.1493 head/acc: 95.6932 time: 0.466   data_time: 0.006  forward_time: 0.340  backward_time: 0.114  lr: 0.000422  max_mem: 6250M
+[2022-12-02 15:15:37,775][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:33:21  iter: 5600 progress: 56 head/CE: 0.0940  head/Dice: 0.1631 head/acc: 95.1913 time: 0.455   data_time: 0.009  forward_time: 0.319  backward_time: 0.115  lr: 0.000406  max_mem: 6250M
+[2022-12-02 15:16:23,651][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:33:54  iter: 5700 progress: 57 head/CE: 0.1029  head/Dice: 0.1931 head/acc: 94.3225 time: 0.473   data_time: 0.007  forward_time: 0.334  backward_time: 0.113  lr: 0.000391  max_mem: 6250M
+[2022-12-02 15:17:09,873][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:32:21  iter: 5800 progress: 58 head/CE: 0.0840  head/Dice: 0.1705 head/acc: 95.1789 time: 0.462   data_time: 0.009  forward_time: 0.328  backward_time: 0.114  lr: 0.000376  max_mem: 6250M
+[2022-12-02 15:17:55,280][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:31:01  iter: 5900 progress: 59 head/CE: 0.0933  head/Dice: 0.1712 head/acc: 94.9656 time: 0.454   data_time: 0.006  forward_time: 0.325  backward_time: 0.111  lr: 0.000361  max_mem: 6250M
+[2022-12-02 15:18:40,708][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Saving checkpoint to /newdata/jiachen/project/fugui/exp3/model/model_6000.pth
+[2022-12-02 15:18:41,111][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Start inference on 1 iterations
+[2022-12-02 15:18:43,880][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Inference done 1/1.Iter Time: 2.7683. ETA=0:00:00
+[2022-12-02 15:18:44,255][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Evaluation results for val in csv format:
+[2022-12-02 15:18:44,255][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] {
+    "PixelBasedEvaluator/iou/bg": 91.09236747538645,
+    "PixelBasedEvaluator/iou/cat": 62.919460989242296,
+    "PixelBasedEvaluator/iou/mean": 77.00591423231438,
+    "PixelBasedEvaluator/recall/bg": 94.8269823845024,
+    "PixelBasedEvaluator/recall/cat": 79.32963653523974,
+    "PixelBasedEvaluator/recall/mean": 87.07830945987106,
+    "PixelBasedEvaluator/precision/bg": 95.85571222182325,
+    "PixelBasedEvaluator/precision/cat": 75.25754385125272,
+    "PixelBasedEvaluator/precision/mean": 85.55662803653799
+}
+[2022-12-02 15:18:44,257][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:29:56  iter: 6000 progress: 60 head/CE: 0.0933  head/Dice: 0.1761 head/acc: 95.1891 time: 0.449   data_time: 0.006  forward_time: 0.327  backward_time: 0.109  lr: 0.000346  max_mem: 6250M
+[2022-12-02 15:19:29,486][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:28:55  iter: 6100 progress: 61 head/CE: 0.0714  head/Dice: 0.1732 head/acc: 94.9440 time: 0.445   data_time: 0.007  forward_time: 0.316  backward_time: 0.115  lr: 0.000331  max_mem: 6250M
+[2022-12-02 15:20:15,332][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:29:10  iter: 6200 progress: 62 head/CE: 0.0769  head/Dice: 0.1441 head/acc: 96.0126 time: 0.461   data_time: 0.007  forward_time: 0.329  backward_time: 0.118  lr: 0.000316  max_mem: 6250M
+[2022-12-02 15:21:01,303][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:29:01  iter: 6300 progress: 63 head/CE: 0.1029  head/Dice: 0.1812 head/acc: 94.5642 time: 0.471   data_time: 0.008  forward_time: 0.341  backward_time: 0.107  lr: 0.000302  max_mem: 6250M
+[2022-12-02 15:21:46,575][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:27:33  iter: 6400 progress: 64 head/CE: 0.0841  head/Dice: 0.1724 head/acc: 94.9900 time: 0.459   data_time: 0.007  forward_time: 0.333  backward_time: 0.107  lr: 0.000287  max_mem: 6250M
+[2022-12-02 15:22:31,676][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:26:17  iter: 6500 progress: 65 head/CE: 0.0763  head/Dice: 0.1429 head/acc: 95.8592 time: 0.451   data_time: 0.010  forward_time: 0.325  backward_time: 0.111  lr: 0.000273  max_mem: 6250M
+[2022-12-02 15:23:17,146][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:25:59  iter: 6600 progress: 66 head/CE: 0.0855  head/Dice: 0.1568 head/acc: 95.4856 time: 0.459   data_time: 0.009  forward_time: 0.322  backward_time: 0.112  lr: 0.000259  max_mem: 6250M
+[2022-12-02 15:24:02,614][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:24:34  iter: 6700 progress: 67 head/CE: 0.0544  head/Dice: 0.1127 head/acc: 96.8172 time: 0.447   data_time: 0.006  forward_time: 0.326  backward_time: 0.106  lr: 0.000246  max_mem: 6250M
+[2022-12-02 15:24:47,546][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:24:20  iter: 6800 progress: 68 head/CE: 0.0737  head/Dice: 0.1358 head/acc: 96.3661 time: 0.457   data_time: 0.006  forward_time: 0.327  backward_time: 0.108  lr: 0.000232  max_mem: 6250M
+[2022-12-02 15:25:33,454][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:24:27  iter: 6900 progress: 69 head/CE: 0.0777  head/Dice: 0.1465 head/acc: 95.7493 time: 0.474   data_time: 0.007  forward_time: 0.338  backward_time: 0.121  lr: 0.000219  max_mem: 6250M
+[2022-12-02 15:26:18,876][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Saving checkpoint to /newdata/jiachen/project/fugui/exp3/model/model_7000.pth
+[2022-12-02 15:26:19,204][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Start inference on 1 iterations
+[2022-12-02 15:26:22,012][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Inference done 1/1.Iter Time: 2.8071. ETA=0:00:00
+[2022-12-02 15:26:22,333][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Evaluation results for val in csv format:
+[2022-12-02 15:26:22,334][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] {
+    "PixelBasedEvaluator/iou/bg": 91.04912287069395,
+    "PixelBasedEvaluator/iou/cat": 59.94145232142605,
+    "PixelBasedEvaluator/iou/mean": 75.49528759606,
+    "PixelBasedEvaluator/recall/bg": 96.22061669042445,
+    "PixelBasedEvaluator/recall/cat": 71.36319780041914,
+    "PixelBasedEvaluator/recall/mean": 83.7919072454218,
+    "PixelBasedEvaluator/precision/bg": 94.42603955571322,
+    "PixelBasedEvaluator/precision/cat": 78.92584559088489,
+    "PixelBasedEvaluator/precision/mean": 86.67594257329905
+}
+[2022-12-02 15:26:22,336][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:22:40  iter: 7000 progress: 70 head/CE: 0.0678  head/Dice: 0.1455 head/acc: 95.8952 time: 0.453   data_time: 0.006  forward_time: 0.326  backward_time: 0.113  lr: 0.000206  max_mem: 6250M
+[2022-12-02 15:27:07,781][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:21:36  iter: 7100 progress: 71 head/CE: 0.0754  head/Dice: 0.1362 head/acc: 96.3465 time: 0.447   data_time: 0.008  forward_time: 0.331  backward_time: 0.102  lr: 0.000194  max_mem: 6250M
+[2022-12-02 15:27:53,236][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:20:44  iter: 7200 progress: 72 head/CE: 0.0677  head/Dice: 0.1268 head/acc: 96.3715 time: 0.445   data_time: 0.008  forward_time: 0.320  backward_time: 0.105  lr: 0.000181  max_mem: 6250M
+[2022-12-02 15:28:38,925][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:21:03  iter: 7300 progress: 73 head/CE: 0.0682  head/Dice: 0.1225 head/acc: 96.4292 time: 0.468   data_time: 0.007  forward_time: 0.329  backward_time: 0.107  lr: 0.000169  max_mem: 6250M
+[2022-12-02 15:29:24,046][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:19:39  iter: 7400 progress: 74 head/CE: 0.0709  head/Dice: 0.1386 head/acc: 95.9281 time: 0.454   data_time: 0.007  forward_time: 0.325  backward_time: 0.112  lr: 0.000158  max_mem: 6250M
+[2022-12-02 15:30:09,163][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:19:11  iter: 7500 progress: 75 head/CE: 0.0673  head/Dice: 0.1226 head/acc: 96.4173 time: 0.461   data_time: 0.006  forward_time: 0.334  backward_time: 0.110  lr: 0.000147  max_mem: 6250M
+[2022-12-02 15:30:54,386][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:18:28  iter: 7600 progress: 76 head/CE: 0.0728  head/Dice: 0.1262 head/acc: 96.3885 time: 0.462   data_time: 0.007  forward_time: 0.336  backward_time: 0.103  lr: 0.000136  max_mem: 6250M
+[2022-12-02 15:31:40,169][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:17:22  iter: 7700 progress: 77 head/CE: 0.0670  head/Dice: 0.1135 head/acc: 96.7450 time: 0.453   data_time: 0.006  forward_time: 0.335  backward_time: 0.106  lr: 0.000125  max_mem: 6250M
+[2022-12-02 15:32:25,563][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:16:49  iter: 7800 progress: 78 head/CE: 0.0702  head/Dice: 0.1297 head/acc: 96.1349 time: 0.459   data_time: 0.008  forward_time: 0.317  backward_time: 0.108  lr: 0.000115  max_mem: 6250M
+[2022-12-02 15:33:11,007][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:15:49  iter: 7900 progress: 79 head/CE: 0.0834  head/Dice: 0.1376 head/acc: 95.9298 time: 0.452   data_time: 0.006  forward_time: 0.325  backward_time: 0.107  lr: 0.000105  max_mem: 6250M
+[2022-12-02 15:33:56,598][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Saving checkpoint to /newdata/jiachen/project/fugui/exp3/model/model_8000.pth
+[2022-12-02 15:33:57,004][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Start inference on 1 iterations
+[2022-12-02 15:34:00,094][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Inference done 1/1.Iter Time: 3.089. ETA=0:00:00
+[2022-12-02 15:34:00,378][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Evaluation results for val in csv format:
+[2022-12-02 15:34:00,378][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] {
+    "PixelBasedEvaluator/iou/bg": 91.50344927083974,
+    "PixelBasedEvaluator/iou/cat": 63.133389131179115,
+    "PixelBasedEvaluator/iou/mean": 77.31841920100942,
+    "PixelBasedEvaluator/recall/bg": 95.72439257156414,
+    "PixelBasedEvaluator/recall/cat": 76.74285882449388,
+    "PixelBasedEvaluator/recall/mean": 86.23362569802902,
+    "PixelBasedEvaluator/precision/bg": 95.40262673208393,
+    "PixelBasedEvaluator/precision/cat": 78.07040709951619,
+    "PixelBasedEvaluator/precision/mean": 86.73651691580005
+}
+[2022-12-02 15:34:00,380][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:15:26  iter: 8000 progress: 80 head/CE: 0.0566  head/Dice: 0.1170 head/acc: 96.8152 time: 0.463   data_time: 0.006  forward_time: 0.329  backward_time: 0.116  lr: 0.000096  max_mem: 6250M
+[2022-12-02 15:34:45,844][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:14:19  iter: 8100 progress: 81 head/CE: 0.0622  head/Dice: 0.1092 head/acc: 96.9571 time: 0.452   data_time: 0.007  forward_time: 0.331  backward_time: 0.107  lr: 0.000087  max_mem: 6250M
+[2022-12-02 15:35:31,451][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:13:35  iter: 8200 progress: 82 head/CE: 0.0607  head/Dice: 0.1158 head/acc: 96.7454 time: 0.453   data_time: 0.006  forward_time: 0.324  backward_time: 0.109  lr: 0.000078  max_mem: 6250M
+[2022-12-02 15:36:17,317][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:12:45  iter: 8300 progress: 83 head/CE: 0.0598  head/Dice: 0.1183 head/acc: 96.4929 time: 0.450   data_time: 0.008  forward_time: 0.314  backward_time: 0.115  lr: 0.000070  max_mem: 6250M
+[2022-12-02 15:37:02,877][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:12:22  iter: 8400 progress: 84 head/CE: 0.0619  head/Dice: 0.1187 head/acc: 96.7318 time: 0.464   data_time: 0.008  forward_time: 0.325  backward_time: 0.119  lr: 0.000062  max_mem: 6250M
+[2022-12-02 15:37:48,432][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:11:02  iter: 8500 progress: 85 head/CE: 0.0655  head/Dice: 0.1175 head/acc: 96.5480 time: 0.442   data_time: 0.008  forward_time: 0.316  backward_time: 0.106  lr: 0.000055  max_mem: 6250M
+[2022-12-02 15:38:34,291][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:10:48  iter: 8600 progress: 86 head/CE: 0.0599  head/Dice: 0.1122 head/acc: 96.8163 time: 0.463   data_time: 0.007  forward_time: 0.332  backward_time: 0.115  lr: 0.000048  max_mem: 6250M
+[2022-12-02 15:39:19,912][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:09:20  iter: 8700 progress: 87 head/CE: 0.0632  head/Dice: 0.1123 head/acc: 96.6892 time: 0.431   data_time: 0.006  forward_time: 0.316  backward_time: 0.102  lr: 0.000041  max_mem: 6250M
+[2022-12-02 15:40:05,229][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:09:10  iter: 8800 progress: 88 head/CE: 0.0578  head/Dice: 0.1046 head/acc: 97.1499 time: 0.459   data_time: 0.007  forward_time: 0.329  backward_time: 0.114  lr: 0.000035  max_mem: 6250M
+[2022-12-02 15:40:50,589][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:08:30  iter: 8900 progress: 89 head/CE: 0.0528  head/Dice: 0.1094 head/acc: 96.9003 time: 0.464   data_time: 0.007  forward_time: 0.330  backward_time: 0.119  lr: 0.000030  max_mem: 6250M
+[2022-12-02 15:41:36,158][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Saving checkpoint to /newdata/jiachen/project/fugui/exp3/model/model_9000.pth
+[2022-12-02 15:41:36,595][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Start inference on 1 iterations
+[2022-12-02 15:41:39,530][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Inference done 1/1.Iter Time: 2.9349. ETA=0:00:00
+[2022-12-02 15:41:39,873][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Evaluation results for val in csv format:
+[2022-12-02 15:41:39,874][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] {
+    "PixelBasedEvaluator/iou/bg": 91.20214146561037,
+    "PixelBasedEvaluator/iou/cat": 62.30715251598099,
+    "PixelBasedEvaluator/iou/mean": 76.75464699079568,
+    "PixelBasedEvaluator/recall/bg": 95.4151176166233,
+    "PixelBasedEvaluator/recall/cat": 76.71006690812168,
+    "PixelBasedEvaluator/recall/mean": 86.06259226237249,
+    "PixelBasedEvaluator/precision/bg": 95.38221023652125,
+    "PixelBasedEvaluator/precision/cat": 76.84373220018131,
+    "PixelBasedEvaluator/precision/mean": 86.11297121835128
+}
+[2022-12-02 15:41:39,875][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:07:38  iter: 9000 progress: 90 head/CE: 0.0619  head/Dice: 0.1166 head/acc: 96.5906 time: 0.459   data_time: 0.006  forward_time: 0.326  backward_time: 0.110  lr: 0.000025  max_mem: 6250M
+[2022-12-02 15:42:24,906][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:06:48  iter: 9100 progress: 91 head/CE: 0.0630  head/Dice: 0.1202 head/acc: 96.7059 time: 0.454   data_time: 0.006  forward_time: 0.324  backward_time: 0.112  lr: 0.000020  max_mem: 6250M
+[2022-12-02 15:43:10,127][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:05:58  iter: 9200 progress: 92 head/CE: 0.0687  head/Dice: 0.1163 head/acc: 96.6959 time: 0.449   data_time: 0.007  forward_time: 0.322  backward_time: 0.114  lr: 0.000016  max_mem: 6250M
+[2022-12-02 15:43:55,224][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:05:24  iter: 9300 progress: 93 head/CE: 0.0556  head/Dice: 0.1029 head/acc: 97.0966 time: 0.463   data_time: 0.007  forward_time: 0.332  backward_time: 0.111  lr: 0.000012  max_mem: 6250M
+[2022-12-02 15:44:40,015][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:04:35  iter: 9400 progress: 94 head/CE: 0.0664  head/Dice: 0.1153 head/acc: 96.7161 time: 0.459   data_time: 0.006  forward_time: 0.332  backward_time: 0.113  lr: 0.000009  max_mem: 6250M
+[2022-12-02 15:45:25,344][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:03:49  iter: 9500 progress: 95 head/CE: 0.0557  head/Dice: 0.1088 head/acc: 96.9599 time: 0.458   data_time: 0.006  forward_time: 0.333  backward_time: 0.110  lr: 0.000006  max_mem: 6250M
+[2022-12-02 15:46:11,299][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:03:02  iter: 9600 progress: 96 head/CE: 0.0522  head/Dice: 0.1135 head/acc: 96.7945 time: 0.455   data_time: 0.006  forward_time: 0.334  backward_time: 0.110  lr: 0.000004  max_mem: 6250M
+[2022-12-02 15:46:56,235][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:02:20  iter: 9700 progress: 97 head/CE: 0.0593  head/Dice: 0.1145 head/acc: 96.6652 time: 0.469   data_time: 0.008  forward_time: 0.331  backward_time: 0.117  lr: 0.000002  max_mem: 6250M
+[2022-12-02 15:47:41,759][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:01:31  iter: 9800 progress: 98 head/CE: 0.0650  head/Dice: 0.1163 head/acc: 96.5618 time: 0.456   data_time: 0.007  forward_time: 0.331  backward_time: 0.104  lr: 0.000001  max_mem: 6250M
+[2022-12-02 15:48:26,850][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:00:45  iter: 9900 progress: 99 head/CE: 0.0557  head/Dice: 0.1129 head/acc: 96.6832 time: 0.455   data_time: 0.005  forward_time: 0.332  backward_time: 0.108  lr: 0.000000  max_mem: 6250M
+[2022-12-02 15:49:12,585][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Saving checkpoint to /newdata/jiachen/project/fugui/exp3/model/model_10000.pth
+[2022-12-02 15:49:12,819][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Saving checkpoint to /newdata/jiachen/project/fugui/exp3/model/model_final.pth
+[2022-12-02 15:49:13,038][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Saving checkpoint to /newdata/jiachen/project/fugui/exp3/model/model_10000.pth
+[2022-12-02 15:49:13,451][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Start inference on 1 iterations
+[2022-12-02 15:49:16,235][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Inference done 1/1.Iter Time: 2.7838. ETA=0:00:00
+[2022-12-02 15:49:16,569][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Evaluation results for val in csv format:
+[2022-12-02 15:49:16,569][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] {
+    "PixelBasedEvaluator/iou/bg": 91.62622449941422,
+    "PixelBasedEvaluator/iou/cat": 63.48009883444535,
+    "PixelBasedEvaluator/iou/mean": 77.55316166692978,
+    "PixelBasedEvaluator/recall/bg": 95.84832352378328,
+    "PixelBasedEvaluator/recall/cat": 76.76766296636515,
+    "PixelBasedEvaluator/recall/mean": 86.30799324507421,
+    "PixelBasedEvaluator/precision/bg": 95.41297064027289,
+    "PixelBasedEvaluator/precision/cat": 78.57527061015571,
+    "PixelBasedEvaluator/precision/mean": 86.9941206252143
+}
+[2022-12-02 15:49:16,570][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] eta: 0:00:00  iter: 10000 progress: 100 head/CE: 0.0541  head/Dice: 0.1059 head/acc: 96.9767 time: 0.464   data_time: 0.008  forward_time: 0.335  backward_time: 0.108  lr: 0.000000  max_mem: 6250M
+[2022-12-02 15:49:16,578][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Overall training speed: 10000 iterations in 1:15:54 (0.4555 s / it)
+[2022-12-02 15:49:16,578][INFO][/python/lib/python3.8/site-packages/torch/multiprocessing/spawn.py][59] Total training time: 1:16:32 (0:00:38 on hooks)

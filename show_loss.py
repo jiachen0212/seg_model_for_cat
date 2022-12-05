@@ -2,7 +2,7 @@
 import os
 import matplotlib.pyplot as plt
 
-log_file = './logs/train-2022-12-02@11_39_03.log'
+log_file = './logs/train-2022-12-03@14_04_04.log'
 lines = open(log_file, 'r')
 losses = []
 acces = []

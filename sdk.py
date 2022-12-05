@@ -80,7 +80,7 @@ if __name__ == "__main__":
     mean_ = [123.675, 116.28, 103.53]
     std_ = [58.395, 57.12, 57.375]
     # 输入模型的尺寸
-    size = [1024, 1024]
+    size = [300,300]
 
     test_paths = [os.path.join(img_path, a) for a in os.listdir(img_path) if '.JPG' in a]
     res_dir = os.path.join(root_path, 'seg_res')
