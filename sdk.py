@@ -70,7 +70,8 @@ def sdk_post(predict, defcets, Confidence=None, num_thres=None):
 
 if __name__ == "__main__":
 
-    root_path = '/Users/chenjia/Desktop/seg_model_for_cat'
+    # root_path = '/Users/chenjia/Desktop/seg_model_for_cat'
+    root_path = r'C:\Users\15974\Desktop\seg_model_for_cat'
     img_path = os.path.join(root_path, 'fugui_data')
 
     defcets = ['bg', 'cat']
