@@ -69,13 +69,13 @@ if __name__ == "__main__":
     img_path = os.path.join(root_path, 'fugui_data')
 
     defcets = ['bg', 'cat']
-    Confidence = [0.5] * len(defcets)
-    num_thres = [0, 0]   
+    Confidence = [0.75] * len(defcets)
+    num_thres = [120, 120]   
     # 模型的mean和std
     mean_ = [123.675, 116.28, 103.53]
     std_ = [58.395, 57.12, 57.375]
     # 输入模型的尺寸
-    size = [300,300]
+    size = [300, 300]
 
     test_paths = [os.path.join(img_path, a) for a in os.listdir(img_path) if '.JPG' in a]
     res_dir = os.path.join(root_path, 'seg_res')
