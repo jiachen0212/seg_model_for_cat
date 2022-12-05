@@ -1,11 +1,12 @@
+# coding=utf-8
+import os 
 import cv2
 import numpy as np
 import onnxruntime as ort
 from scipy.special import softmax
-from scipy import spatial
-import os
+import matplotlib.pyplot as plt
 from PIL import Image
-import math
+from postprocess_crf import CRFs 
 
 
 def label2colormap(label):
@@ -33,19 +34,13 @@ def check_connect_comp(img, label_index):
     return mask, num, label
 
 
-def sdk_post(predict, defcets, Confidence=None, num_thres=None):
+def sdk_post(predict, Confidence=None, num_thres=None):
 
-    defects_nums = [0]*len(defcets)
-
-    points = []
-    boxes = []
     num_class = predict.shape[1]
     map_ = np.argmax(onnx_predict[0], axis=1)
-  
     mask_map = np.max(predict[0, :, :, :], axis=0)
     mask_ = map_[0, :, :]
     temo_predict = np.zeros(mask_.shape)
-    score_print = np.zeros(mask_.shape)
     for i in range(num_class):
         if i == 0:
             continue
@@ -65,7 +60,6 @@ def sdk_post(predict, defcets, Confidence=None, num_thres=None):
                         temo_predict += temp * i
             
     return temo_predict  
-
 
 
 if __name__ == "__main__":
@@ -88,11 +82,10 @@ if __name__ == "__main__":
     if not os.path.exists(res_dir):
         os.makedirs(res_dir)
 
-
     # 导入onnx
     onnx_path = os.path.join(root_path, '10000.onnx')
     onnx_session = ort.InferenceSession(onnx_path)
-    
+
 
     for test_path in test_paths:
         img_base_name = os.path.basename(test_path)
@@ -104,9 +97,25 @@ if __name__ == "__main__":
         onnx_inputs = {onnx_session.get_inputs()[0].name: img_.astype(np.float32)}
         onnx_predict = onnx_session.run(None, onnx_inputs)
         predict = softmax(onnx_predict[0], 1)
-        map_ = sdk_post(predict, defcets, Confidence=Confidence, num_thres=num_thres)
+        map_ = sdk_post(predict, Confidence=Confidence, num_thres=num_thres)
+        # predict_map使用denscrf后处理优化下边缘, gaussian_, bilateral俩参数
+        crf_map_ = CRFs(img, map_, gaussian_=5, bilateral_=10)
         mask_vis = label2colormap(map_)
+        crf_map = label2colormap(crf_map_)
         mask_vis = cv2.resize(mask_vis, (w_org, h_org))
         res = cv2.addWeighted(img_org, 0.2, mask_vis, 0.8, 0)
-        cv2.imwrite(os.path.join(res_dir, img_base_name), res)
+        crf_map = cv2.resize(crf_map, (w_org, h_org))
+        crf_res = cv2.addWeighted(img_org, 0.2, crf_map, 0.8, 0)
+
+        # res_merge = cv2.hconcat([res, crf_res])
+        # cv2.imwrite(os.path.join(res_dir, img_base_name), res_merge)
+        #         
+        plt.subplot(121)
+        plt.xlabel('model_result')
+        plt.imshow(res[..., ::-1])
+        plt.subplot(122)
+        plt.xlabel('crf_res')
+        plt.imshow(crf_res[..., ::-1])
+        plt.savefig(os.path.join(res_dir, img_base_name))
+  
 

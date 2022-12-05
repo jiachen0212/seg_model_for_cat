@@ -31,7 +31,7 @@ def get_mask_from_json(json_path):
     return mask
 
 
-data_path = '/Users/chenjia/Desktop/seg_model_for_cat/fugui_data'
+data_path = r'C:\Users\15974\Desktop\seg_model_for_cat\fugui_data'
 res_mask_dir = os.path.join(data_path, 'mask')
 if not os.path.exists(res_mask_dir):
     os.makedirs(res_mask_dir)
