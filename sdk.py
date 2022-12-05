@@ -83,7 +83,7 @@ if __name__ == "__main__":
         os.makedirs(res_dir)
 
     # 导入onnx
-    onnx_path = os.path.join(root_path, '10000.onnx')
+    onnx_path = os.path.join(root_path, '15000.onnx')
     onnx_session = ort.InferenceSession(onnx_path)
 
 

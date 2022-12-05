@@ -71,11 +71,10 @@ def sdk_main(img_org):
     mean_ = [123.675, 116.28, 103.53]
     std_ = [58.395, 57.12, 57.375]
     # 输入模型的尺寸
-    size = [300, 300]
+    size = [400, 400]
     # 导入onnx
-    onnx_path = r'C:\Users\15974\Desktop\seg_model_for_cat\10000.onnx' 
+    onnx_path = r'C:\Users\15974\Desktop\seg_model_for_cat\15000.onnx' 
     onnx_session = ort.InferenceSession(onnx_path)
-
 
     h_org, w_org = img_org.shape[:2]
     img = cv2.resize(img_org, (size[0], size[1]))
