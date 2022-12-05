@@ -8,9 +8,9 @@ model for seg my cat, Lihua fugui.
 ![fugui3](https://user-images.githubusercontent.com/29834982/205573679-ea0d92e6-6037-4f82-83d5-e1e69f58fed0.JPG)
 
 # 实验配置
-### 1.exp.yaml
+exp.yaml
 
 # Train Dataset
-### 1. voc中cat数据挑出来train   1124 cats
-### 2.  other cat 网上找到的部分cat数据  172 cats 
-### 3. https://www.robots.ox.ac.uk/~vgg/data/pets/   2371cats
+1. voc中cat数据挑出来train   1124 cats
+2.  other cat 网上找到的部分cat数据  172 cats 
+3. https://www.robots.ox.ac.uk/~vgg/data/pets/   2371cats
