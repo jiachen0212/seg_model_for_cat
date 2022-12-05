@@ -73,7 +73,7 @@ def sdk_main(img_org):
     # 输入模型的尺寸
     size = [400, 400]
     # 导入onnx
-    onnx_path = r'C:\Users\15974\Desktop\seg_model_for_cat\15000.onnx' 
+    onnx_path = r'C:\Users\15974\Desktop\seg_model_for_cat\onnxs\15000.onnx' 
     onnx_session = ort.InferenceSession(onnx_path)
 
     h_org, w_org = img_org.shape[:2]
