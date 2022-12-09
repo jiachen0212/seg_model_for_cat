@@ -76,12 +76,12 @@ def my_paste(org_img, gray_mask):
 
 if __name__ == "__main__":
 
-    root_path = '/Users/chenjia/Desktop/seg_model_for_cat'
+    root_path = '/Users/chenjia/Downloads/Smartmore/2022/seg_model_for_cat'
     # root_path = r'C:\Users\15974\Desktop\seg_model_for_cat')
     img_path = os.path.join(root_path, 'fugui_data', 'test')
 
     defcets = ['bg', 'cat']
-    Confidence = [0.95] * len(defcets)
+    Confidence = [0.5] * len(defcets)
     num_thres = [120, 120]   
     # 模型的mean和std
     mean_ = [123.675, 116.28, 103.53]
@@ -113,7 +113,7 @@ if __name__ == "__main__":
         map_ = sdk_post(predict, onnx_predict, Confidence=Confidence, num_thres=num_thres)
         
         # predict_map使用denscrf后处理优化下边缘, gaussian_, bilateral俩参数
-        crf_map_ = CRFs(img, map_, gaussian_=7, bilateral_=30)
+        # crf_map_ = CRFs(img, map_, gaussian_=7, bilateral_=30)
         
         mask_vis = label2colormap(map_)
         # crf_map = label2colormap(crf_map_)
