@@ -110,25 +110,25 @@ if __name__ == "__main__":
         onnx_inputs = {onnx_session.get_inputs()[0].name: img_.astype(np.float32)}
         onnx_predict = onnx_session.run(None, onnx_inputs)
         predict = softmax(onnx_predict[0], 1)
-        map_ = sdk_post(predict, onnx_predict, Confidence=Confidence, num_thres=num_thres)
-        
-        # predict_map使用denscrf后处理优化下边缘, gaussian_, bilateral俩参数
-        # crf_map_ = CRFs(img, map_, gaussian_=7, bilateral_=30)
-        
+        map_ = sdk_post(predict, onnx_predict, Confidence=Confidence, num_thres=num_thres)        
         mask_vis = label2colormap(map_)
-        # crf_map = label2colormap(crf_map_)
-        mask_vis = cv2.resize(mask_vis, (w_org, h_org))
         resize_map_ = cv2.resize(map_, (w_org, h_org))
-        resize_crf_map_ = cv2.resize(map_, (w_org, h_org))
-
+        # mask_vis = cv2.resize(mask_vis, (w_org, h_org))
         # res = cv2.addWeighted(img_org, 0.2, mask_vis, 0.8, 0)
+        
         res = my_paste(img_org, resize_map_)
-        res_crf = my_paste(img_org, resize_crf_map_)
+        # predict_map使用denscrf后处理优化下边缘, gaussian_, bilateral俩参数
+        try:
+            crf_map_ = CRFs(img, map_, gaussian_=3, bilateral_=10)
+            # crf_map = label2colormap(crf_map_)
+            resize_crf_map_ = cv2.resize(crf_map_, (w_org, h_org))
+            res_crf = my_paste(img_org, resize_crf_map_)
+        except:
+            res_crf = res
 
         cv2.imwrite(os.path.join(res_dir, img_base_name), res_crf)
         # crf_map = cv2.resize(crf_map, (w_org, h_org))
         # crf_res = cv2.addWeighted(img_org, 0.2, crf_map, 0.8, 0)
-
         # res_merge = cv2.hconcat([res, crf_res])
         # cv2.imwrite(os.path.join(res_dir, img_base_name), res_merge)
          
