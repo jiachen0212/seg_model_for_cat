@@ -82,7 +82,7 @@ if __name__ == "__main__":
 
     defcets = ['bg', 'cat']
     Confidence = [0.5] * len(defcets)
-    num_thres = [120, 120]   
+    num_thres = [200, 200]   
     # 模型的mean和std
     mean_ = [123.675, 116.28, 103.53]
     std_ = [58.395, 57.12, 57.375]
@@ -96,7 +96,7 @@ if __name__ == "__main__":
         os.makedirs(res_dir)
 
     # 导入onnx
-    onnx_path = os.path.join(root_path, 'onnxs', '15000.onnx')
+    onnx_path = os.path.join(root_path, 'onnxs', '10000.onnx')
     onnx_session = ort.InferenceSession(onnx_path)
 
 

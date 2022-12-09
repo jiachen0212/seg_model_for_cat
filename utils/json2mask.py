@@ -4,7 +4,7 @@ import cv2
 import json
 import numpy as np 
 
-def get_mask_from_json(json_path):
+def get_mask_from_json(json_path, to_255=False):
     
     category_map = ['bg', 'cat']
 
@@ -28,16 +28,19 @@ def get_mask_from_json(json_path):
                     cv2.polylines(mask, np.array([points], dtype=np.int32),
                                 False, id_, thickness=4)
                 break
+    # 把类别*255使得观察方便
+    if to_255:
+        mask *= 255    
+
     return mask
 
 
-data_path = r'C:\Users\15974\Desktop\seg_model_for_cat\fugui_data'
+data_path = '/Users/chenjia/Downloads/Smartmore/2022/seg_model_for_cat/json2mask' # r'C:\Users\15974\Desktop\seg_model_for_cat\fugui_data'
 res_mask_dir = os.path.join(data_path, 'mask')
 if not os.path.exists(res_mask_dir):
     os.makedirs(res_mask_dir)
 
 jss = [os.path.join(data_path, a) for a in os.listdir(data_path) if '.json' in a]
 for js in jss:
-    print(js)
-    mask = get_mask_from_json(js)
+    mask = get_mask_from_json(js, to_255=True) 
     cv2.imwrite(os.path.join(res_mask_dir, os.path.basename(js)[:-4]+'png'), mask)
