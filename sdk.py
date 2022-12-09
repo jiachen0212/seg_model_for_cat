@@ -62,14 +62,26 @@ def sdk_post(predict, onnx_predict, Confidence=None, num_thres=None):
     return temo_predict  
 
 
+def my_paste(org_img, gray_mask):
+    org1 = org_img[:,:,0]
+    org2 = org_img[:,:,1]
+    org3 = org_img[:,:,2]
+    org1[gray_mask==0]=255
+    org2[gray_mask==0]=255
+    org3[gray_mask==0]=255
+
+    return cv2.merge([org1, org2, org3])[:,:,::-1]
+
+
+
 if __name__ == "__main__":
 
-    # root_path = '/Users/chenjia/Desktop/seg_model_for_cat'
-    root_path = r'C:\Users\15974\Desktop\seg_model_for_cat'
-    img_path = os.path.join(root_path, 'fugui_data')
+    root_path = '/Users/chenjia/Desktop/seg_model_for_cat'
+    # root_path = r'C:\Users\15974\Desktop\seg_model_for_cat')
+    img_path = os.path.join(root_path, 'fugui_data', 'test')
 
     defcets = ['bg', 'cat']
-    Confidence = [0.75] * len(defcets)
+    Confidence = [0.95] * len(defcets)
     num_thres = [120, 120]   
     # 模型的mean和std
     mean_ = [123.675, 116.28, 103.53]
@@ -77,7 +89,8 @@ if __name__ == "__main__":
     # 输入模型的尺寸
     size = [400, 400]
 
-    test_paths = [os.path.join(img_path, a) for a in os.listdir(img_path) if '.JPG' in a]
+    img_type = ['.JPG', '.jpg', '.png']
+    test_paths = [os.path.join(img_path, a) for a in os.listdir(img_path) if a[-4:] in img_type]
     res_dir = os.path.join(root_path, 'seg_res')
     if not os.path.exists(res_dir):
         os.makedirs(res_dir)
@@ -92,29 +105,38 @@ if __name__ == "__main__":
         img_org = Image.open(test_path) 
         img_org = np.asarray(img_org)
         h_org, w_org = img_org.shape[:2]
-        img = cv2.resize(img_org, (size[0], size[1]))
+        img = cv2.resize(img_org, (size[0], size[1])) 
         img_ = sdk_pre(img, mean_, std_)
         onnx_inputs = {onnx_session.get_inputs()[0].name: img_.astype(np.float32)}
         onnx_predict = onnx_session.run(None, onnx_inputs)
         predict = softmax(onnx_predict[0], 1)
         map_ = sdk_post(predict, onnx_predict, Confidence=Confidence, num_thres=num_thres)
+        
         # predict_map使用denscrf后处理优化下边缘, gaussian_, bilateral俩参数
-        crf_map_ = CRFs(img, map_, gaussian_=5, bilateral_=10)
+        crf_map_ = CRFs(img, map_, gaussian_=7, bilateral_=30)
+        
         mask_vis = label2colormap(map_)
-        crf_map = label2colormap(crf_map_)
+        # crf_map = label2colormap(crf_map_)
         mask_vis = cv2.resize(mask_vis, (w_org, h_org))
-        res = cv2.addWeighted(img_org, 0.2, mask_vis, 0.8, 0)
-        crf_map = cv2.resize(crf_map, (w_org, h_org))
-        crf_res = cv2.addWeighted(img_org, 0.2, crf_map, 0.8, 0)
+        resize_map_ = cv2.resize(map_, (w_org, h_org))
+        resize_crf_map_ = cv2.resize(map_, (w_org, h_org))
+
+        # res = cv2.addWeighted(img_org, 0.2, mask_vis, 0.8, 0)
+        res = my_paste(img_org, resize_map_)
+        res_crf = my_paste(img_org, resize_crf_map_)
+
+        cv2.imwrite(os.path.join(res_dir, img_base_name), res_crf)
+        # crf_map = cv2.resize(crf_map, (w_org, h_org))
+        # crf_res = cv2.addWeighted(img_org, 0.2, crf_map, 0.8, 0)
 
         # res_merge = cv2.hconcat([res, crf_res])
         # cv2.imwrite(os.path.join(res_dir, img_base_name), res_merge)
          
-        plt.subplot(121)
-        plt.xlabel('model_result')
-        plt.imshow(res[..., ::-1])
-        plt.subplot(122)
-        plt.xlabel('crf_res')
-        plt.imshow(crf_res[..., ::-1])
-        plt.savefig(os.path.join(res_dir, img_base_name))
+        # plt.subplot(121)
+        # plt.xlabel('model_result')
+        # plt.imshow(res[..., ::-1])
+        # plt.subplot(122)
+        # plt.xlabel('crf_res')
+        # plt.imshow(crf_res[..., ::-1])
+        # plt.savefig(os.path.join(res_dir, img_base_name))
   
